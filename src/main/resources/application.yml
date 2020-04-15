@@ -1,0 +1,4 @@
+api:
+  geolocation:
+    google:
+      key: ${GOOGLE_KEY}

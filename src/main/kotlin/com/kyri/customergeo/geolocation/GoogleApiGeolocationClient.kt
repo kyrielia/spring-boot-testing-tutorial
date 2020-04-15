@@ -1,12 +1,38 @@
 package com.kyri.customergeo.geolocation
 
+import com.github.kittinunf.fuel.Fuel
+import com.jayway.jsonpath.JsonPath
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 @Component
-class GoogleApiGeolocationClient : GeolocationClient {
-//    https://maps.googleapis.com/maps/api/geocode/json?address=address&key=key
+class GoogleApiGeolocationClient(
+    @Value("\${api.geolocation.google.key}") private val key: String
+) : GeolocationClient {
+    @Throws(UnknownAddressException::class)
+    override fun getGeolocationForAddress(address: String): Geolocation {
+        val (_, response, result) = Fuel.get(
+            "https://maps.googleapis.com/maps/api/geocode/json",
+            listOf(
+                "address" to address,
+                "key" to key
+            )
+        )
+            .responseString()
 
-    override fun getGeolocationForAddress(address: String): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val status: String = JsonPath.read(result.get(), "$.status")
+
+        if (status == "ZERO_RESULTS") {
+            throw UnknownAddressException(address)
+        }
+
+        val latitude: Double = JsonPath.read(result.get(), "$.results[0].geometry.location.lat")
+        val longitude: Double = JsonPath.read(result.get(), "$.results[0].geometry.location.lng")
+
+        return Geolocation(latitude.to3Dp(), longitude.to3Dp())
+    }
+
+    private fun Double.to3Dp(): Double {
+        return "%.3f".format(this).toDouble()
     }
 }
