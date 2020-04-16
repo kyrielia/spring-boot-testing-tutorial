@@ -3,6 +3,9 @@ package com.kyri.customergeo.addresses
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Component
 
+/**
+ * Outbound adapter for getting customer data
+ */
 @Component
 class HibernateCustomerAddressClient(
     private val customerRepository: CustomerRepository

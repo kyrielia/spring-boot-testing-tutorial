@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * Inbound API adapter for customer geolocations. It delegates to the customerGeolocationService interface (port),
+ * to allow the internal business logic of the application to take over.
+ */
 @RestController
 class CustomerGeolocationApi(
     private val customerGeolocationService: CustomerGeolocationService

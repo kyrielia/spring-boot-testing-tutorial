@@ -5,6 +5,9 @@ import com.jayway.jsonpath.JsonPath
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
+/**
+ * Outbound adapter for getting geolocations from the Google API
+ */
 @Component
 class GoogleApiGeolocationClient(
     @Value("\${api.geolocation.google.key}") private val key: String

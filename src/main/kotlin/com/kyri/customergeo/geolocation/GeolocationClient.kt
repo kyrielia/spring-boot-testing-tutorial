@@ -3,6 +3,9 @@ package com.kyri.customergeo.geolocation
 import org.springframework.http.HttpStatus
 import org.springframework.web.server.ResponseStatusException
 
+/**
+ * Outbound port for getting geolocations. Having this as an interface is essentially the same as a contract
+ */
 interface GeolocationClient {
     @Throws(UnknownAddressException::class)
     fun getGeolocationForAddress(address: String): Geolocation
