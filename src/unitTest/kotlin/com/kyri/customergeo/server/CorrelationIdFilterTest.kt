@@ -9,6 +9,8 @@ import org.slf4j.MDC
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 
+// Testing this filter as a unit test, as it is fairly self-contained code.
+// IMO it overkill to test this as an application test
 class CorrelationIdFilterTest {
     private val correlationIdFilter = CorrelationIdFilter()
 

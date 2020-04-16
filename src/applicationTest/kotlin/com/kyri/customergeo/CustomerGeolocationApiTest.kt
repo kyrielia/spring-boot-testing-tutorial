@@ -9,6 +9,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.api.fail
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.reset
 import org.springframework.boot.test.context.SpringBootTest
@@ -55,7 +56,7 @@ class CustomerGeolocationApiTest {
         `when`(geolocationClient.getGeolocationForAddress(address)).thenReturn(Geolocation(0.0, 0.0))
 
         // When I call the API
-        val response: ResponseEntity<String> = restTemplate.getForEntity("$baseUrl/customer/$customerId/geolocation", String::class)
+        val response: ResponseEntity<String> = callGeolocationApi()
 
         // Then I expect a 200 response
         assertEquals(200, response.statusCodeValue, "Http status code did not match")
@@ -74,7 +75,8 @@ class CustomerGeolocationApiTest {
 
         // When I call the API
         try {
-            restTemplate.getForEntity<Void>("$baseUrl/customer/$customerId/geolocation", String::class)
+            callGeolocationApi()
+            fail { "Should thrown exception" }
         } catch (e: HttpStatusCodeException) {
             // Then I expect a 404 response
             assertEquals(404, e.rawStatusCode, "Http status code did not match")
@@ -97,10 +99,14 @@ class CustomerGeolocationApiTest {
 
         // When I call the API
         try {
-            restTemplate.getForEntity<Void>("$baseUrl/customer/$customerId/geolocation", String::class)
+            callGeolocationApi()
+            fail { "Should thrown exception" }
         } catch (e: HttpStatusCodeException) {
             // Then I expect a 404 response
             assertEquals(500, e.rawStatusCode, "Http status code did not match")
         }
     }
+
+    private fun callGeolocationApi(): ResponseEntity<String> =
+        restTemplate.getForEntity("$baseUrl/customer/$customerId/geolocation", String::class)
 }
