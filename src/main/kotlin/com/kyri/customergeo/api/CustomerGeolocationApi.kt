@@ -12,7 +12,7 @@ class CustomerGeolocationApi(
     private val customerGeolocationService: CustomerGeolocationService
 ) {
     @GetMapping("/customer/{customerId}/geolocation")
-    fun getGeolocationForCustomer(@PathVariable customerId: String): ResponseEntity<Geolocation> {
+    fun getGeolocationForCustomer(@PathVariable customerId: Int): ResponseEntity<Geolocation> {
         val geolocation = customerGeolocationService.geolocationForCustomer(customerId)
         return ResponseEntity.ok(geolocation)
     }

@@ -30,7 +30,7 @@ class CustomerGeolocationApiTest {
 
     private val baseUrl: String by lazy { "http://localhost:$port" }
 
-    private val customerId = "123"
+    private val customerId = 123
     private val restTemplate = RestTemplate()
 
     @MockBean

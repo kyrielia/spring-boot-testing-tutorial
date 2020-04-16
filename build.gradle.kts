@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.3.61"
     kotlin("plugin.spring") version "1.3.61"
+    kotlin("plugin.jpa") version "1.3.72"
 }
 
 group = "com.kyri"
@@ -16,10 +17,13 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
 
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8")
     implementation("org.springframework.boot:spring-boot-starter-web:2.2.4.RELEASE")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.2.4.RELEASE")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8")
     implementation("com.github.kittinunf.fuel:fuel:2.2.1")
     implementation("com.jayway.jsonpath:json-path:2.4.0")
+
+    runtime("com.h2database:h2:1.4.199")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.2.4.RELEASE")
 }

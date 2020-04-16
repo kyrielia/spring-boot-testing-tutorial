@@ -10,7 +10,7 @@ class CustomerGeolocationService(
     private val customerAddressClient: CustomerAddressClient,
     private val geolocationClient: GeolocationClient
 ) {
-    fun geolocationForCustomer(customerId: String): Geolocation {
+    fun geolocationForCustomer(customerId: Int): Geolocation {
         val address = customerAddressClient.getAddressForCustomer(customerId)
         return geolocationClient.getGeolocationForAddress(address)
     }

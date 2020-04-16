@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS customers;
+
+CREATE TABLE customers (
+  id INT PRIMARY KEY,
+  address VARCHAR(250) NOT NULL
+);
