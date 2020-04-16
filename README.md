@@ -15,7 +15,4 @@ pattern should be applied when
 ## TODO
 
 * Write readme
-* Implement unit test
-* Implement contract test with DB
-* Rename integration tests to E2E
 * Implement E2E tests

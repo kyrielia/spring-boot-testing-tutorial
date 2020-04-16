@@ -45,7 +45,7 @@ sourceSets {
         compileClasspath += sourceSets["main"].output + sourceSets["test"].output
         runtimeClasspath += sourceSets["main"].output + sourceSets["test"].output
     }
-    val integrationTest by creating {
+    val e2eTest by creating {
         compileClasspath += sourceSets["main"].output + sourceSets["test"].output
         runtimeClasspath += sourceSets["main"].output + sourceSets["test"].output
     }
@@ -64,7 +64,7 @@ configurations {
         extendsFrom(configurations["testImplementation"])
         extendsFrom(configurations["testRuntime"])
     }
-    val integrationTestImplementation by getting {
+    val e2eTestImplementation by getting {
         extendsFrom(configurations["testImplementation"])
         extendsFrom(configurations["testRuntime"])
     }
@@ -83,11 +83,11 @@ tasks{
         testClassesDirs = sourceSets["applicationTest"].output.classesDirs
         classpath = sourceSets["applicationTest"].runtimeClasspath
     }
-    register<Test>("runIntegrationTests") {
+    register<Test>("runE2ETests") {
         group = JavaBasePlugin.VERIFICATION_GROUP
         description = "Runs integration tests only"
-        testClassesDirs = sourceSets["integrationTest"].output.classesDirs
-        classpath = sourceSets["integrationTest"].runtimeClasspath
+        testClassesDirs = sourceSets["e2eTest"].output.classesDirs
+        classpath = sourceSets["e2eTest"].runtimeClasspath
     }
     register<Test>("runContractTests") {
         group = JavaBasePlugin.VERIFICATION_GROUP
