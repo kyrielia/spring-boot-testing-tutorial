@@ -1,6 +1,6 @@
 package com.kyri.customergeo.service
 
-import com.kyri.customergeo.addresses.CustomerAddressClient
+import com.kyri.customergeo.addresses.CustomerDetailsClient
 import com.kyri.customergeo.geolocation.Geolocation
 import com.kyri.customergeo.geolocation.GeolocationClient
 import org.springframework.stereotype.Service
@@ -15,11 +15,11 @@ interface CustomerGeolocationService {
 
 @Service
 class CustomerGeolocationServiceImpl(
-    private val customerAddressClient: CustomerAddressClient,
+    private val customerDetailsClient: CustomerDetailsClient,
     private val geolocationClient: GeolocationClient
 ): CustomerGeolocationService {
     override fun geolocationForCustomer(customerId: Int): Geolocation {
-        val address = customerAddressClient.getAddressForCustomer(customerId)
-        return geolocationClient.getGeolocationForAddress(address)
+        val customer = customerDetailsClient.getCustomerDetails(customerId)
+        return geolocationClient.getGeolocationForAddress(customer.address)
     }
 }

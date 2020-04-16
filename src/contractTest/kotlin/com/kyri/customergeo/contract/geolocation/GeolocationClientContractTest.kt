@@ -44,7 +44,7 @@ class GeolocationClientContractTest {
             fail { "Should have thrown UnknownAddressException" }
         } catch (e: UnknownAddressException) {
             // Then I get an unknown address exception
-            assertEquals("Address $address could not be found", e.message, "Exception message did not match")
+            assertEquals("Address $address could not be found", e.reason, "Exception message did not match")
         }
     }
 }

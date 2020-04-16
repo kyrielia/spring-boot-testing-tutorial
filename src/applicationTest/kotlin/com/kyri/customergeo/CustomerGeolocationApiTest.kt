@@ -1,6 +1,7 @@
 package com.kyri.customergeo
 
-import com.kyri.customergeo.addresses.CustomerAddressClient
+import com.kyri.customergeo.addresses.Customer
+import com.kyri.customergeo.addresses.CustomerDetailsClient
 import com.kyri.customergeo.addresses.UnknownCustomerException
 import com.kyri.customergeo.geolocation.Geolocation
 import com.kyri.customergeo.geolocation.GeolocationClient
@@ -35,22 +36,23 @@ class CustomerGeolocationApiTest {
     private val restTemplate = RestTemplate()
 
     @MockBean
-    private lateinit var customerAddressClient: CustomerAddressClient
+    private lateinit var customerDetailsClient: CustomerDetailsClient
 
     @MockBean
     private lateinit var geolocationClient: GeolocationClient
 
     @AfterEach
     fun reset() {
-        reset(customerAddressClient, geolocationClient)
+        reset(customerDetailsClient, geolocationClient)
     }
 
     @Test
     fun `should return geolocation for customer`() {
         val address = "address"
+        val customer = Customer(customerId, address)
 
         // Given customer 123 has address 'address'
-        `when`(customerAddressClient.getAddressForCustomer(customerId)).thenReturn(address)
+        `when`(customerDetailsClient.getCustomerDetails(customerId)).thenReturn(customer)
 
         // And address 'address' has geolocation '0, 0'
         `when`(geolocationClient.getGeolocationForAddress(address)).thenReturn(Geolocation(0.0, 0.0))
@@ -71,7 +73,7 @@ class CustomerGeolocationApiTest {
     @Test
     fun `should return 404 not found if customer id does not exist`() {
         // Given customer 123 does not exist
-        `when`(customerAddressClient.getAddressForCustomer(customerId)).thenThrow(UnknownCustomerException(customerId))
+        `when`(customerDetailsClient.getCustomerDetails(customerId)).thenThrow(UnknownCustomerException(customerId))
 
         // When I call the API
         try {
@@ -90,9 +92,10 @@ class CustomerGeolocationApiTest {
         // 2 - the customer registered a valid address when they signed up, but now the address no longer exists
 
         val address = "address"
+        val customer = Customer(customerId, address)
 
         // Given customer 123 has address 'address'
-        `when`(customerAddressClient.getAddressForCustomer(customerId)).thenReturn(address)
+        `when`(customerDetailsClient.getCustomerDetails(customerId)).thenReturn(customer)
 
         // And address 'address' does not exist
         `when`(geolocationClient.getGeolocationForAddress(address)).thenThrow(UnknownAddressException(address))

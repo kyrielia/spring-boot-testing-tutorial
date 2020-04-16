@@ -7,19 +7,13 @@ import org.springframework.stereotype.Component
  * Outbound adapter for getting customer data
  */
 @Component
-class HibernateCustomerAddressClient(
+class HibernateCustomerDetailsClient(
     private val customerRepository: CustomerRepository
-): CustomerAddressClient {
+): CustomerDetailsClient {
     @Throws(UnknownCustomerException::class)
-    override fun getAddressForCustomer(customerId: Int): String {
-        var address = ""
-
-        customerRepository.findById(customerId).ifPresentOrElse(
-            { customer -> address = customer.address },
-            { throw UnknownCustomerException(customerId) }
-        )
-
-        return address
+    override fun getCustomerDetails(customerId: Int): Customer {
+        val maybeCustomer = customerRepository.findById(customerId)
+        return if (maybeCustomer.isPresent) maybeCustomer.get() else throw UnknownCustomerException(customerId)
     }
 }
 
