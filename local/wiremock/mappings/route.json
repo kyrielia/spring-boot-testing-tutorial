@@ -1,0 +1,23 @@
+{
+  "mappings": [
+    {
+      "priority": 4,
+      "request": {
+        "url": "/route",
+        "method": "GET",
+        "headers": {
+          "Content-Type": {
+            "equalTo": "application/json"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": [
+          "Instruction #1",
+          "Instruction #2"
+        ]
+      }
+    }
+  ]
+}

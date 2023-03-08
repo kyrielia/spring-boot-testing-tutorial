@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+
+  wiremock:
+    image: wiremock/wiremock:2.32.0-alpine
+    volumes:
+      - "$PWD/local/wiremock:/home/wiremock"
+    ports:
+      - '8090:8080'

@@ -1,0 +1,4 @@
+rootProject.name = 'iw-backend-test'
+
+include 'my-consumer'
+include 'my-provider'

@@ -1,0 +1,89 @@
+{
+  "consumer": {
+    "name": "delivery"
+  },
+  "interactions": [
+    {
+      "description": "Get Member by ID",
+      "providerStates": [
+        {
+          "name": "member exists"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/member/14c9941d-6b21-46d0-966e-eb3f91a69b8e"
+      },
+      "response": {
+        "body": {
+          "addressLine1": "The Cottage",
+          "addressLine2": "Willow Way",
+          "city": "London",
+          "postcode": "A9 9AA"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$.addressLine1": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.addressLine2": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.city": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.postcode": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;\\s?charset=[\\w\\-]+)?"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pact-jvm": {
+      "version": "4.4.6"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "member"
+  }
+}
